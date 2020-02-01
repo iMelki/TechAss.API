@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechAss.API.Data;
+using TechAss.API.DataTransferObjects;
 using TechAss.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,29 +11,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace TechAss.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FiguresController : ControllerBase
     {
-        private readonly DataContext _context;
-        public FiguresController(DataContext context)
+        private readonly IFiguresRepository _figRep;
+        public FiguresController(IFiguresRepository figRep)
         {
-            _context = context;
-
+            _figRep = figRep;
         }
+
         // GET api/figures
         [HttpGet]
         public async Task<IActionResult> GetFigures()
         {
-            List<Figure> figures = await _context.Figures.ToListAsync();
+            List<Figure> figures = await _figRep.GetFigures();
+            figures.Reverse();
             return Ok(figures);
         }
 
-        // PUT api/figures/Beyonce
-        [HttpPut("{name}")]
-        public void Put(int id, [FromBody] string value)
+        // POST api/figures/register{'Beyonce', 'http:..'}
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(FigureForRegisterDto figureForRegisterDto)
         {
+            var figureToCreate = new Figure
+            {
+                Name = figureForRegisterDto.Name,
+                Url = figureForRegisterDto.Url
+            };
+
+            var createdFigure = _figRep.Register(figureToCreate);
+
+            return StatusCode(201);
         }
     }
 }
