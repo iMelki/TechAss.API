@@ -34,17 +34,22 @@ namespace TechAss.API.Controllers
         // POST api/figures/register{'Beyonce', 'http:..'}
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(FigureForRegisterDto figureForRegisterDto)
+        public async Task<IActionResult> LookupAndRegister(FigureForRegisterDto figureForRegisterDto)
         {
+            //TODO: lookup for instagram link
+            string url = "http://beyonce.instagram.com/";
+            //TODO: validate it
             var figureToCreate = new Figure
             {
                 Name = figureForRegisterDto.Name,
-                Url = figureForRegisterDto.Url
+                Url = url
             };
 
-            var createdFigure = _figRep.Register(figureToCreate);
+            var createdFigure = await _figRep.Register(figureToCreate);
 
-            return StatusCode(201);
+            return Ok(new{
+                url = createdFigure.Url
+            });
         }
     }
 }
