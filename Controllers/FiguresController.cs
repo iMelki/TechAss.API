@@ -32,7 +32,6 @@ namespace TechAss.API.Controllers
         }
 
         // POST api/figures/register{'Beyonce', 'http:..'}
-
         [HttpPost("register")]
         public async Task<IActionResult> LookupAndRegister(FigureForRegisterDto figureForRegisterDto)
         {
@@ -48,7 +47,8 @@ namespace TechAss.API.Controllers
             var createdFigure = await _figRep.Register(figureToCreate);
 
             return Ok(new{
-                url = createdFigure.Url
+                Name = createdFigure.Name,
+                Url = createdFigure.Url
             });
         }
     }
