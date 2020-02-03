@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechAss.API.Data;
+using TechAss.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace TechAss.API
             services.AddControllers();
             services.AddCors();
             services.AddScoped<IFiguresRepository, FiguresRepository>();
+            services.AddSingleton<IBingSearcherService, BingSearcherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
