@@ -41,9 +41,7 @@ namespace TechAss.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> LookupAndRegister(FigureForRegisterDto figureForRegisterDto)
         {
-            //TODO: lookup for instagram link
             string url = await _bingSearcherService.Lookup(figureForRegisterDto.Name);
-            //TODO: validate it
             var figureToCreate = new Figure
             {
                 Name = figureForRegisterDto.Name,
