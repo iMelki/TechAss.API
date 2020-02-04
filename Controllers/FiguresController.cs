@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace TechAss.API.Controllers
 {
     //[Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class FiguresController : ControllerBase
     {
         private readonly IFiguresRepository _figRep;
